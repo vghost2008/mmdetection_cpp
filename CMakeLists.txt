@@ -11,7 +11,7 @@ aux_source_directory(. SRC_FILES)
 
 # Define our library target
 #add_library(faster_rcnn SHARED $SRC_FILES)
-link_directories(/home/wj/ai/software/vision_ops/build)
+link_directories(/home/wj/ai/work/torchvision_ops/build)
 add_executable(faster_rcnn ${SRC_FILES})
 
 include_directories(/usr/local/include/opencv4/opencv2)
@@ -25,4 +25,4 @@ target_link_libraries(faster_rcnn "${TORCH_LIBRARIES}")
 target_link_libraries(faster_rcnn ${OpenCV_LIBS})
 target_link_libraries(faster_rcnn visionop)
 #target_link_libraries(faster_rcnn /home/wj/ai/software/vision_ops/build/libvisionop.a)
-target_link_options(faster_rcnn PUBLIC -Wl,-rpath,/home/wj/ai/software/vision_ops/build)
+target_link_options(faster_rcnn PUBLIC -Wl,-rpath,/home/wj/ai/work/torchvision_ops/build)
