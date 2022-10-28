@@ -38,7 +38,10 @@ namespace cvt
                 const auto  color    = BASE_COLORMAP[class_id%BASE_COLORMAP.size()];
 
                 cv::rectangle(img, rect, color, 2);
-                cv::putText(img, std::to_string(class_id)+"_"+std::to_string(int(score*100)), cv::Point(rect.x + 5, rect.y + 8), cv::FONT_HERSHEY_COMPLEX_SMALL, 1, color);
+                cv::putText(img, std::to_string(class_id)+"_"+std::to_string(int(score*100)), cv::Point(rect.x, rect.y), 
+                            cv::FONT_HERSHEY_DUPLEX, 0.8f, cv::Scalar(0,0,255));
+                            //cv::FONT_HERSHEY_DUPLEX, 0.8f, color);
+                            //cv::FONT_HERSHEY_COMPLEX_SMALL, 1, color);
             }
         }
 

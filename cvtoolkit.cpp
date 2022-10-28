@@ -5,6 +5,13 @@
 using namespace cv;
 using namespace std;
 std::vector<cv::Scalar> cvt::BASE_COLORMAP = {
+    cv::Scalar(255, 0, 0),
+    cv::Scalar(0, 255, 0),
+    cv::Scalar(0, 0, 255),
+    cv::Scalar(255, 255, 0),
+    cv::Scalar(0, 255, 255),
+    cv::Scalar(255, 0, 255),
+    cv::Scalar(255, 255, 255),
     cv::Scalar(128, 0, 0),
     cv::Scalar(0, 128, 0),
     cv::Scalar(128, 128, 0),
@@ -12,9 +19,7 @@ std::vector<cv::Scalar> cvt::BASE_COLORMAP = {
     cv::Scalar(128, 0, 128),
     cv::Scalar(0, 128, 128),
     cv::Scalar(128, 128, 128),
-    cv::Scalar(255, 0, 0),
-    cv::Scalar(0, 255, 0),
-    cv::Scalar(0, 0, 255)};
+    };
 
 cv::Mat cvt::resize(const cv::Mat& img,int width,int height,bool keep_ratio,int pad_value,float* r)
 {
