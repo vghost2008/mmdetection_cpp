@@ -44,6 +44,23 @@ namespace cvt
                             //cv::FONT_HERSHEY_COMPLEX_SMALL, 1, color);
             }
         }
+    template<typename DetObjs>
+        void draw_masks_dets(cv::Mat& img,const DetObjs& objs) {
+            for(auto& obj:objs) {
+                const auto &rect          = obj.bbox;
+                int         class_id      = obj.label;
+                float       score         = obj.score;
+                const auto  color         = BASE_COLORMAP[class_id%BASE_COLORMAP.size()];
+                auto       &mask_contours = obj.mask_contours;
+
+                cv::drawContours(img,mask_contours,-1,color);
+                cv::rectangle(img, rect, color, 2);
+                cv::putText(img, std::to_string(class_id)+"_"+std::to_string(int(score*100)), cv::Point(rect.x, rect.y), 
+                            cv::FONT_HERSHEY_DUPLEX, 0.8f, cv::Scalar(0,0,255));
+                            //cv::FONT_HERSHEY_DUPLEX, 0.8f, color);
+                            //cv::FONT_HERSHEY_COMPLEX_SMALL, 1, color);
+            }
+        }
 
     inline void default_log_func(const std::string& v)
     {
@@ -87,6 +104,8 @@ namespace cvt
             std::chrono::steady_clock::time_point t_;
             bool autolog_ = false;
     };
+    std::vector<std::vector<cv::Point>> get_mask_contours(const uint8_t* mask,int width,int height,const cv::Rect& bbox);
+    std::vector<std::vector<cv::Point>> get_mask_contours(const cv::Mat& mask,const cv::Rect& bbox);
 #ifdef USE_TORCH
     torch::Tensor normalize(const torch::Tensor& data,const std::vector<float>& mean,const std::vector<float>& std);
 #endif

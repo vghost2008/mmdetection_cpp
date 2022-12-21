@@ -223,3 +223,31 @@ torch::Tensor cvt::normalize(const torch::Tensor& data,const std::vector<float>&
     return (data-t_mean)/t_std;
 }
 #endif
+std::vector<std::vector<cv::Point>> cvt::get_mask_contours(const cv::Mat& mask,const cv::Rect& bbox)
+{
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
+    findContours( mask, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE );
+
+    const float mask_width = mask.cols;
+    const float mask_height = mask.rows;
+    vector<vector<Point>> res_contours;
+
+    for(auto& contour:contours) {
+        vector<Point> tmp_points;
+        for(auto& p:contour) {
+            auto x = p.x*bbox.width/mask_width+bbox.x;
+            auto y = p.y*bbox.height/mask_height+bbox.y;
+            tmp_points.push_back(cv::Point(x,y));
+        }
+        res_contours.push_back(std::move(tmp_points));
+    }
+
+    return res_contours;
+}
+std::vector<std::vector<cv::Point>> cvt::get_mask_contours(const uint8_t*mask, int width,int height,const cv::Rect& bbox)
+{
+    const cv::Mat cv_mask(height,width,CV_8UC1,(void*)mask);
+
+    return get_mask_contours(cv_mask,bbox);
+}
