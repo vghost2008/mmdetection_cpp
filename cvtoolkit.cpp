@@ -1,5 +1,5 @@
 #include "cvtoolkit.h"
-#include<opencv.hpp>
+#include<opencv2/opencv.hpp>
 #include <iostream>
 
 using namespace cv;
@@ -217,8 +217,8 @@ void cvt::hwc2chw(const cv::Mat& img, float* data,float mean,float var)
 torch::Tensor cvt::normalize(const torch::Tensor& data,const std::vector<float>& mean,const std::vector<float>& std)
 {
     at::TensorOptions opt = at::TensorOptions().dtype(torch::ScalarType::Float).device(data.device());
-    const torch::Tensor t_mean = torch::from_blob((void*)mean.data(),{mean.size()},opt);
-    const torch::Tensor t_std = torch::from_blob((void*)std.data(),{std.size()},opt);
+    const torch::Tensor t_mean = torch::from_blob((void*)mean.data(),{int(mean.size())},opt);
+    const torch::Tensor t_std = torch::from_blob((void*)std.data(),{int(std.size())},opt);
 
     return (data-t_mean)/t_std;
 }

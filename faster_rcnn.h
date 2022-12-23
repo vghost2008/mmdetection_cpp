@@ -1,7 +1,7 @@
 #pragma once
 #include <torch/script.h>
 #include <string>
-#include <opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include "detection_fwd.h"
 
 class FasterRCNN
@@ -19,6 +19,13 @@ class FasterRCNN
          */
         DetObjs forward(const cv::Mat& img);
         std::vector<DetObjs> forward(const std::vector<cv::Mat>& imgs);
+    public:
+        inline float score_threshold()const {
+            return score_threshold_;
+        }
+        inline void set_score_threshold(float v) {
+            score_threshold_ = v;
+        }
     protected:
         virtual DetObjs get_results(const std::vector<torch::Tensor>& data,float r=1.0f);
         virtual std::vector<DetObjs> get_results(const std::vector<torch::Tensor>& data,std::vector<float> r);

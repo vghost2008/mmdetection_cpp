@@ -1,8 +1,9 @@
 #pragma once
-#include <opencv.hpp>
+#include <opencv2/opencv.hpp>
 #include <vector>
 #include <utility>
 #include <string>
+#include <chrono>
 #ifdef USE_TORCH
 #include <torch/script.h>
 #endif
